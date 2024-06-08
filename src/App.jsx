@@ -1,67 +1,32 @@
-import { useState, useEffect } from 'react'
 import './App.css'
-import { getDatabase, ref, get } from 'firebase/database'
-import app from './firebase-config'
+import CardW from './components/CardW'
+import { Accordion, AccordionItem } from '@nextui-org/react'
+import UseWeather from './Hook/UseWeather'
 
-function App() {
-  let [tiempo, setTiempo] = useState([]);
-  let [ultimo, setUltimo] = useState([]);
-
-  const fetchData = async () => {
-    const db = getDatabase(app);
-    const dbRef = ref(db, "weather/2-push");
-    const snapshot = await get(dbRef);
-    if(snapshot.exists()) {
-      setTiempo(Object.values(snapshot.val()));
-    } else {
-      alert("error");
-    }
-  }
-
-  const fetchData2 = async () => {
-    const db = getDatabase(app);
-    const dbRef = ref(db, "weather/1-set");
-    const snapshot = await get(dbRef);
-    if(snapshot.exists()) {
-      setUltimo(Object.values(snapshot.val()));
-    } else {
-      alert("error");
-    }
-  }
-
-  useEffect(() => {
-    fetchData2()
-    .then((response) => {
-      return response.json()
-    }).then((results) => {
-      setUltimo(results)
-    }).catch((error)=>{
-      console.log(error)
-    })
-
-    fetchData()
-    .then((response) => {
-      return response.json()
-    }).then((results) => {
-      setTiempo(results)
-    }).catch((error)=>{
-      console.log(error)
-    })
-  })
+function App () {
+  const { ultimo, tiempo } = UseWeather()
 
   return (
-    <>
-      <ul>
-        {tiempo.map( (item,index) => (
-        <li key={index}>
-          Temp : {item.temperatura} |
-          humedad: {item.humedad} |
-          presión: {item.presión}
-        </li>
-        )        
-      )}
-      </ul>
-    </>
+    <div className=''>
+      <h1 className='text-7xl m-5'>Estación Meteorlógica</h1>
+      <div className='flex flex-row justify-center items-center'>
+        <CardW tm={ultimo[2]} hm={ultimo[0]} pr={ultimo[1]} />
+      </div>
+      <Accordion className='bg-slate-200 text-2xl'>
+        <AccordionItem key='1' aria-label='Accordion 1' title='Datos recopilados' className=''>
+          <ul className=''>
+            {tiempo.map((item, index) => (
+              <li className='font-sans font-light text-black text-xl flex items-center justify-center' key={index}>
+                <div className='p-3 bg-amber-200'>temperatura : {item.temperatura}</div>
+                <div className='p-3 bg-sky-200'>humedad : {item.humedad}</div>
+                <div className='p-3 bg-green-200'>presión : {item.presión}</div>
+                <br />
+              </li>
+            ))}
+          </ul>
+        </AccordionItem>
+      </Accordion>
+    </div>
   )
 }
 
