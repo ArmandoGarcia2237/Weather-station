@@ -2,6 +2,7 @@ import CardW from '../components/CardW'
 import Proyect from '../components/Proyect'
 import Grafic from '../components/Grafic'
 import Database from '../components/Database'
+import LastL from '../components/LastL'
 
 import UseWeather from '../Hook/UseWeather'
 
@@ -15,10 +16,10 @@ const Inicio = () => {
         <span className='m-0 p-0 text-xl font-light'>En tiempo real</span>
         <br />
         <div className='flex flex-row justify-center items-center'>
-          <CardW tm={ultimo[4]} hm={ultimo[2]} pr={ultimo[3]} />
+          <CardW tm={ultimo[2]} hm={ultimo[0]} pr={ultimo[1]} />
         </div>
         <div className='text-xl pt-1 mt-1'>ultima lectura</div>
-        <div className='font-light text-xl pt-0 mt-0 pb-5 mb-5'><a className='font-sans font-bold'>fecha:</a> {ultimo[0]} <a className='font-sans font-bold'>  Hora:</a> {ultimo[1]}</div>
+        <LastL date={ultimo[3]} />
         <Proyect />
         <Grafic />
         <div className='m-3 p-3 justify-center'>

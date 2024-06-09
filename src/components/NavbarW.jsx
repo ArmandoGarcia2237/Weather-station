@@ -25,11 +25,11 @@ const NavbarW = () => {
       </NavbarContent>
       <NavbarContent justify='end'>
         <NavbarItem className='hidden lg:flex'>
-          <Link href='/'>link1</Link>
+          <Link href='/Mensajes'>Mensajes</Link>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color='primary' href='/' variant='flat'>
-            link2
+          <Button as={Link} color='primary' href='/EnviarMensaje' variant='flat'>
+            Envía un mensaje!
           </Button>
         </NavbarItem>
       </NavbarContent>
